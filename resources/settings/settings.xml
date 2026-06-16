@@ -1,0 +1,17 @@
+<settings>
+    <setting propertyKey="@Properties.DefaultTag" title="@Strings.DefaultTagName">
+        <settingConfig type="alphaNumeric" required="true" maxLength="10"/>
+    </setting>
+    <setting propertyKey="@Properties.MinLapDistance" title="@Strings.MinLapDistanceName">
+        <settingConfig type="numeric" min="50"/>
+    </setting>
+    <setting propertyKey="@Properties.MaxLapDistance" title="@Strings.MaxLapDistanceName">
+        <settingConfig type="numeric" min="150"/>
+    </setting>
+    <setting propertyKey="@Properties.MarkAccuracy" title="@Strings.MarkAccuracyName">
+        <settingConfig type="numeric" min="1"/>
+    </setting>
+    <setting propertyKey="@Properties.FieldReset" title="@Strings.FieldResetName">
+        <settingConfig type="boolean"/>
+    </setting>
+</settings>

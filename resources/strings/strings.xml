@@ -1,0 +1,8 @@
+<strings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
+    <string id="AppName">PureLaps</string>
+    <string id="DefaultTagName">Data field label</string>
+    <string id="MinLapDistanceName">Minimum lap distance in meters</string>
+    <string id="MaxLapDistanceName">Maximum lap distance in meters</string>
+    <string id="MarkAccuracyName">Lap mark accuracy in meters</string>
+    <string id="FieldResetName">Reset lap counter by stop/start activity</string>
+</strings>
