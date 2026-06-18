@@ -27,6 +27,7 @@ class PureLapsDataFieldView extends WatchUi.SimpleDataField {
                 && info.currentLocationAccuracy >= Position.QUALITY_POOR) {
             if (markLocation == null) {
                 markLocation = info.currentLocation;
+                distanceAtMark = info.elapsedDistance;
             } else {
                 if (info.elapsedDistance - distanceAtMark >= Properties.getValue("MinLapDistance")) {
                     if (distanceBetween(markLocation, info.currentLocation) <= Properties.getValue("MarkAccuracy")) {
