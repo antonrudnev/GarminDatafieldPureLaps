@@ -11,6 +11,9 @@
     <setting propertyKey="@Properties.MarkAccuracy" title="@Strings.MarkAccuracyName">
         <settingConfig type="numeric" min="1"/>
     </setting>
+    <setting propertyKey="@Properties.LapsLeft" title="@Strings.LapsLeftName">
+        <settingConfig type="boolean"/>
+    </setting>
     <setting propertyKey="@Properties.FieldReset" title="@Strings.FieldResetName">
         <settingConfig type="boolean"/>
     </setting>

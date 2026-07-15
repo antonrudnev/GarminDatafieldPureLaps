@@ -10,7 +10,13 @@ class PureLapsDataFieldView extends WatchUi.SimpleDataField {
 
     hidden var markLocation = null;
     hidden var distanceAtMark = 0;
+    hidden var timeAtMark = 0;
     hidden var lapCounter = 0;
+    hidden var lastLapTime = 0;
+    hidden var workoutPrevStepCompleteTime = 0;
+    hidden var workoutStepDurationTime = 0;
+    hidden var workoutStepLapCounter = 0;
+    hidden var workoutStepLapsLeft = 0;
 
     // Set the label of the data field here.
     function initialize() {
@@ -29,19 +35,52 @@ class PureLapsDataFieldView extends WatchUi.SimpleDataField {
                 markLocation = info.currentLocation;
                 distanceAtMark = info.elapsedDistance;
             } else {
+                var workoutStepInfo = Activity.getCurrentWorkoutStep();
+                if (workoutStepInfo != null) {
+                    var workoutStep = workoutStepInfo.step;
+                    if (workoutStep instanceof Activity.WorkoutIntervalStep) {
+                        workoutStep = workoutStep.activeStep;
+                    }
+                    if (workoutStep.durationType == Activity.WORKOUT_STEP_DURATION_TIME) {
+                        if (workoutStep.durationValue != null) {
+                            workoutStepDurationTime = workoutStep.durationValue;
+                        }
+                    }
+                }
                 if (info.elapsedDistance - distanceAtMark >= Properties.getValue("MinLapDistance")) {
                     if (distanceBetween(markLocation, info.currentLocation) <= Properties.getValue("MarkAccuracy")) {
                         lapCounter += 1;
+                        if (workoutStepDurationTime > 0) {
+                            workoutStepLapCounter += 1;
+                        }
                         distanceAtMark = info.elapsedDistance;
+                        lastLapTime = ((info.timerTime - timeAtMark) / 1000).toNumber();
+                        timeAtMark = info.timerTime;
                     } else {
                         if (info.elapsedDistance - distanceAtMark >= Properties.getValue("MaxLapDistance")) {
                             markLocation = null;
                         }
                     }
                 }
+                if (workoutStepDurationTime > 0 && workoutStepLapCounter > 1) {
+                    workoutStepLapsLeft = Math.ceil((workoutStepDurationTime - (info.timerTime - workoutPrevStepCompleteTime) / 1000) / lastLapTime).toNumber();
+                }
             }
         }
+        if (Properties.getValue("LapsLeft") && workoutStepLapsLeft > 0 && System.getClockTime().sec % 5 <= 1) {
+            return -workoutStepLapsLeft;
+        }
         return lapCounter;
+    }
+
+    function onWorkoutStepComplete() as Void {
+        var activityInfo = Activity.getActivityInfo();
+        if (activityInfo != null && activityInfo.timerTime != null) {
+            workoutPrevStepCompleteTime = activityInfo.timerTime;
+            workoutStepDurationTime = 0;
+            workoutStepLapCounter = 0;
+            workoutStepLapsLeft = 0;
+        }
     }
 
     function onTimerStop() as Void {

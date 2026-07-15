@@ -4,5 +4,6 @@
     <string id="MinLapDistanceName">Minimum lap distance in meters</string>
     <string id="MaxLapDistanceName">Maximum lap distance in meters</string>
     <string id="MarkAccuracyName">Lap mark accuracy in meters</string>
+    <string id="LapsLeftName">Display laps left estimation for structured time-based workouts</string>
     <string id="FieldResetName">Reset lap counter by stop/start activity</string>
 </strings>
